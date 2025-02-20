@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>System Info</title>
+</head>
+<body>
+    <h1>System Information</h1>
+    <p>Server Time: {{ server_time }}</p>
+
+    <h2>System Stats</h2>
+    <pre>
+    {% for line in header_lines %}
+        {{ line }}
+    {% endfor %}
+    </pre>
+
+    <h2>Process List</h2>
+    <table border="1">
+        <tr>
+            <th>PID</th> <th>USER</th> <th>PR</th> <th>NI</th> <th>VIRT</th>
+            <th>RES</th> <th>SHR</th> <th>CPU %</th> <th>MEM %</th> <th>TIME+</th> <th>COMMAND</th>
+        </tr>
+        {% for process in process_list %}
+        <tr>
+            <td>{{ process.PID }}</td>
+            <td>{{ process.USER }}</td>
+            <td>{{ process.PR }}</td>
+            <td>{{ process.NI }}</td>
+            <td>{{ process.VIRT }}</td>
+            <td>{{ process.RES }}</td>
+            <td>{{ process.SHR }}</td>
+            <td>{{ process.CPU_PERCENT }}</td>  <!-- Fixed key -->
+            <td>{{ process.MEM_PERCENT }}</td>  <!-- Fixed key -->
+            <td>{{ process.TIME_PLUS }}</td>    <!-- Changed TIME+ to TIME_PLUS -->
+            <td>{{ process.COMMAND }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{% url 'index' %}">Back to Dashboard</a></p>
+</body>
+</html>
