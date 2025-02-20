@@ -8,6 +8,10 @@ def index(request):
 def system_info(request):
     server_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
+    # Define user details
+    user_name = "Dheeraj M Havale"
+    user_id = "DHEERAJMH"
+
     try:
         top_output = subprocess.check_output("top -b -n 1", shell=True, text=True).split("\n")
     except subprocess.CalledProcessError:
@@ -23,12 +27,14 @@ def system_info(request):
             process_list.append({
                 "PID": parts[0], "USER": parts[1], "PR": parts[2],
                 "NI": parts[3], "VIRT": parts[4], "RES": parts[5],
-                "SHR": parts[6], "CPU_PERCENT": parts[8], "MEM_PERCENT": parts[9],
-                "TIME+": parts[10], "COMMAND": " ".join(parts[11:])
+                "SHR": parts[6], "CPU_PERCENT": parts[8], "MEM_PERCENT": parts[9],  # Fixed keys
+                "TIME_PLUS": parts[10], "COMMAND": " ".join(parts[11:])  # Changed TIME+ to TIME_PLUS
             })
 
     return render(request, "monitor/system_info.html", {
         "server_time": server_time,
+        "user_name": user_name,
+        "user_id": user_id,
         "header_lines": header_lines,
         "process_list": process_list
     })
